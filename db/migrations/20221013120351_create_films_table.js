@@ -21,6 +21,8 @@ exports.up = function (knex) {
           .unsigned()
           .references("id")
           .inTable("country");
+
+        // table.index("name", "idx_name");
       })
       //! genre table
       .createTableIfNotExists("genre", function (table) {
