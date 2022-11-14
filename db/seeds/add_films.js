@@ -1,4 +1,4 @@
-const faker = require("@faker-js/faker");
+const faker = require('@faker-js/faker')
 
 // generate new film with faker
 function createRandomFilm() {
@@ -15,44 +15,32 @@ function createRandomFilm() {
       min: 1,
       max: 4,
     }),
-  };
+  }
 }
 
 //seed
 exports.seed = function (knex) {
-  if (false) {
+  // to use the concrete seed
+  if (true) {
     // push generated films to insert
     function pushFilms() {
-      const FILMS = [];
+      const FILMS = []
       Array.from({ length: 1000000 }).forEach(() => {
-        FILMS.push(createRandomFilm());
-      });
-      return FILMS;
+        FILMS.push(createRandomFilm())
+      })
+      return FILMS
     }
     return (
-      knex("films")
+      knex('films')
         // Deletes ALL existing entries
         .del()
         .then(function () {
           const insertFilms = () => {
-            return pushFilms();
-          };
+            return pushFilms()
+          }
           // Inserts seed entries
-          return knex.batchInsert("films", insertFilms(), 5000);
+          return knex.batchInsert('films', insertFilms(), 5000)
         })
-    );
-    //   return knex("films")
-    //     .del()
-    //     .then(function () {
-    //       const insertMFilms = () => {
-    //         const films = [];
-    //         for (let i = 1; i <= 1000000; i++) {
-    //           films.push({ name: `Фильм ${i}`, year: 2010, id_country: 1 });
-    //         }
-    //         return films;
-    //       };
-    //       // Inserts seed entries
-    //       return knex.batchInsert("films", insertMFilms(), 5000);
-    //     });
+    )
   }
-};
+}

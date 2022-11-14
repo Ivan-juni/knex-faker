@@ -1,4 +1,4 @@
-const faker = require("@faker-js/faker");
+const faker = require('@faker-js/faker')
 
 // generate new film with faker
 function createRandomFilm() {
@@ -15,43 +15,44 @@ function createRandomFilm() {
       min: 1,
       max: 4,
     }),
-  };
+  }
 }
 
 // add id to this filmsupdate
 exports.seed = function (knex) {
-  if (true) {
+  // to use the concrete seed
+  if (false) {
     // push generated films to update
     function pushFilms() {
-      const FILMS = [];
+      const FILMS = []
       Array.from({ length: 10000 }).forEach(() => {
-        FILMS.push(createRandomFilm());
-      });
-      return FILMS;
+        FILMS.push(createRandomFilm())
+      })
+      return FILMS
     }
 
-    const films = pushFilms();
+    const films = pushFilms()
     for (let i = 0; i < films.length; i++) {
-      const film = films[i];
-      film.id = i + 1;
+      const film = films[i]
+      film.id = i + 1
     }
     return knex.transaction((trx) => {
-      const queries = [];
+      const queries = []
       films.forEach((film) => {
-        const query = knex("films")
-          .where("id", film.id)
+        const query = knex('films')
+          .where('id', film.id)
           .update({
             name: film.name,
             year: film.year,
             id_country: film.id_country,
           })
-          .transacting(trx); // This makes every update be in the same transaction
-        queries.push(query);
-      });
+          .transacting(trx) // This makes every update be in the same transaction
+        queries.push(query)
+      })
 
       Promise.all(queries) // Once every query is written
         .then(trx.commit) // We try to execute all of them
-        .catch(trx.rollback); // And rollback in case any of them goes wrong
-    });
+        .catch(trx.rollback) // And rollback in case any of them goes wrong
+    })
   }
-};
+}
