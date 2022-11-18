@@ -19,7 +19,7 @@ function createRandomFilm() {
 }
 
 //seed
-exports.seed = function (knex) {
+exports.seed = async function (knex) {
   // to use the concrete seed
   if (true) {
     // push generated films to insert
